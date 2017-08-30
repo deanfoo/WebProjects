@@ -18,7 +18,7 @@ namespace Web.Controllers
 
         public ActionResult DoLogin()
         {
-            return View();
+           return  Redirect("/Home/Index");
         }
 
     }
