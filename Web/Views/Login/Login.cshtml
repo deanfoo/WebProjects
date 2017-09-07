@@ -1,36 +1,98 @@
 ﻿@{
     ViewBag.Title = "Login";
 }
-
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head>
-<title>Simple Login Form</title>
-<meta charset="UTF-8" />
-<meta name="Designer" content="PremiumPixels.com">
-<meta name="Author" content="$hekh@r d-Ziner, CSSJUNTION.com">
-<link rel="stylesheet" type="text/css" href="/css/reset.css">
-<link rel="stylesheet" type="text/css" href="/css/structure.css">
-    <script type="text/javascript">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="keywords" content="scclui框架">
+    <meta name="description" content="scclui为轻量级的网站后台管理系统模版。">
+    <title>首页</title>
 
-    </script>
+    <link rel="stylesheet" href="/common/layui/css/layui.css">
+    <link rel="stylesheet" href="/common/css/sccl.css">
+    <script src="/common/js/sccl-util.js"></script>
 </head>
 
-<body>
-<form class="box login"  action="Login/DoLogin" method="post">
-	<fieldset class="boxBody">
-	  <label>用户名</label>
-	  <input type="text" name="name" tabindex="1" placeholder="请输入密码" required>
-	  <label><a href="#" class="rLink" tabindex="5">忘记密码?</a>密码</label>
-	  <input type="password" name="pwd" tabindex="2" required>
-	</fieldset>
-	<footer>
-	  <label><input type="checkbox" name="isCheck" tabindex="3">记住密码</label>
-	  <input type="submit" class="btnLogin" value="登录" tabindex="4">
-	</footer>
-</form>
-<footer id="main">
-  <a href="http://wwww.cssjunction.com">Simple Login Form (HTML5/CSS3 Coded) by CSS Junction</a> | <a href="http://www.premiumpixels.com">PSD by Premium Pixels</a>
-</footer>
+<body class="login-bg">
+    <div class="login-box">
+        <header>
+            <h1>协同工作平台</h1>
+        </header>
+        <div class="login-main">
+            <form action="/Login/DoLogin" method="post" class="layui-form">
+                <input name="__RequestVerificationToken" type="hidden" value="">
+                <div class="layui-form-item">
+                    <label class="login-icon">
+                        <i class="layui-icon"></i>
+                    </label>
+                    <input type="text" name="name" lay-verify="userName" autocomplete="off" placeholder="这里输入登录名" class="layui-input" value=@(ViewData["userName"]==null?"":ViewData["userName"])>
+                </div>
+                <div class="layui-form-item">
+                    <label class="login-icon">
+                        <i class="layui-icon"></i>
+                    </label>
+                    <input type="password" name="pwd" lay-verify="password" autocomplete="off" placeholder="这里输入密码" class="layui-input" value=@(ViewData["pwd"]==null?"":ViewData["pwd"])>
+                </div>
+                <div class="layui-form-item">
+                    <div class="pull-left login-remember">
+                        <label>记住帐号？</label>
+
+                        <input type="checkbox" name="rememberMe" value="true" checked=@(ViewData["checked"]==null?false:true) lay-skin="switch" title="记住帐号"><div class="layui-unselect layui-form-switch"><i></i></div>
+                    </div>
+                    <div class="pull-right">
+                        <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="login" onclick="Set();">
+                            <i class="layui-icon"></i> 登录
+                        </button>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </form>
+        </div>
+        <footer>
+            <p>xuan © www.mycodes.net</p>
+        </footer>
+    </div>
+    <script type="text/html" id="code-temp">
+        <div class="login-code-box">
+            <input type="text" class="layui-input" id="code" />
+            <img id="valiCode" src="/manage/validatecode?v=636150612041789540" alt="验证码" />
+        </div>
+    </script>
+    <script src="/common/layui/layui.js"></script>
+    <script>
+        layui.use(['layer', 'form'], function () {
+            var layer = layui.layer,
+				$ = layui.jquery,
+				form = layui.form();
+
+            form.verify({
+                userName: function (value) {
+                    if (value === '')
+                        return '请输入用户名';
+                },
+                password: function (value) {
+                    if (value === '')
+                        return '请输入密码';
+                }
+            });
+
+            var errorCount = 0;
+            //如果是账户密码错误重定向到登录页面则给出提示
+
+            if (resultmsg != '' && resultmsg != null) {
+                layer.msg(resultmsg);
+            }
+        });
+        
+
+    </script>
+
 </body>
 </html>
+
+

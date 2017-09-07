@@ -1,4 +1,4 @@
-﻿ 
+﻿using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +9,18 @@ namespace DAL
 {
     public class T_UserDAL
     {
-      
-        public bool DoLogin(Dictionary<string, string> dic)
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="dic"></param>
+        /// <returns></returns>
+        public T_User DoLogin(Dictionary<string, string> dic)
         {
-    
-            return true;
+            WebDbEntities db = new WebDbEntities();
+            string accountName = dic["AccountName"];
+            string pwd = dic["Pwd"];
+            T_User user = db.T_User.Where(x => x.AccountName == accountName).Where(a => a.Pwd == pwd).SingleOrDefault();
+            return user;
         }
     }
 }
